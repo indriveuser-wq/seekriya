@@ -4,12 +4,16 @@ import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SubjectDetailScreen from "../screens/SubjectDetailScreen";
 import SubjectsScreen from "../screens/SubjectsScreen";
+import TopicDrillScreen from "../screens/TopicDrillScreen";
+import TopicNotesScreen from "../screens/TopicNotesScreen";
 
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Subjects: undefined;
   SubjectDetail: { subjectId: string };
+  TopicDrill: { chapterId: string };
+  TopicNotes: { topicId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -21,6 +25,8 @@ export default function AppNavigator() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Subjects" component={SubjectsScreen} />
       <Stack.Screen name="SubjectDetail" component={SubjectDetailScreen} />
+      <Stack.Screen name="TopicDrill" component={TopicDrillScreen} />
+      <Stack.Screen name="TopicNotes" component={TopicNotesScreen} />
     </Stack.Navigator>
   );
 }

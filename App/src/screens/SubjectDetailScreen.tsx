@@ -78,7 +78,7 @@ export default function SubjectDetailScreen({ navigation, route }: Props) {
           <ChapterCard
             key={chapter.id}
             chapter={chapter}
-            onAction={(id) => console.log("chapter-action:", id)}
+            onAction={(id) => navigation.navigate("TopicDrill", { chapterId: id })}
           />
         ))}
 
