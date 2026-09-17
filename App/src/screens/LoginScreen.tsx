@@ -27,7 +27,13 @@ import { monoText } from "../theme/typography";
 export default function LoginScreen() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const form = useLoginForm(() => navigation.navigate("Home"));
+  const form = useLoginForm((user) => {
+  if (user.role === "teacher") {
+    navigation.navigate("Teacher");
+  } else {
+    navigation.navigate("Home");
+  }
+});
   const { data: countdown } = useExamCountdown();
 
   return (

@@ -8,6 +8,8 @@ import ProgressScreen from "../screens/ProgressScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import SubjectDetailScreen from "../screens/SubjectDetailScreen";
 import SubjectsScreen from "../screens/SubjectsScreen";
+import TeacherCohortScreen from "../screens/TeacherCohortScreen";
+import TeacherDashboardScreen from "../screens/TeacherDashboardScreen";
 import TestInsightsScreen from "../screens/TestInsightsScreen";
 import TestResultScreen from "../screens/TestResultScreen";
 import TestsCenterScreen from "../screens/TestsCenterScreen";
@@ -28,6 +30,8 @@ export type RootStackParamList = {
   TestResult: { resultId: string };
   Progress: undefined;
   Settings: undefined;
+  Teacher: undefined;
+  TeacherCohort: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -48,6 +52,8 @@ export default function AppNavigator() {
       <Stack.Screen name="TestResult" component={TestResultScreen} />
       <Stack.Screen name="Progress" component={ProgressScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Teacher" component={TeacherDashboardScreen} />
+      <Stack.Screen name="TeacherCohort" component={TeacherCohortScreen} />
     </Stack.Navigator>
   );
 }
