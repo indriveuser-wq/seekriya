@@ -54,4 +54,11 @@ export interface PracticeDrillData {
   nextLabel: string;
   targetPrefix: string;
   targetHighlight: string;
+    copilot: CopilotInfo;
+}
+
+export interface CopilotInfo {
+  title: string;
+  quote: string;
+  chips: string[];
 }

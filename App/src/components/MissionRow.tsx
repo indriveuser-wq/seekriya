@@ -5,12 +5,14 @@ import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 import { Mission, MissionActionStyle, MissionIconKey } from "../types/dashboard.types";
 
+import { MaterialIcons } from "@expo/vector-icons";
+
 const ICONS: Record<MissionIconKey, {
-  name: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
+  name: React.ComponentProps<typeof MaterialIcons>["name"];
   color: string;
 }> = {
-  notes: { name: "note-text-outline", color: colors.primary },
-  brain: { name: "head-question-outline", color: colors.purple },
+  notes: { name: "sticky-note-2", color: colors.primary },
+  brain: { name: "psychology", color: colors.purple },
   replay: { name: "replay", color: colors.gold },
 };
 

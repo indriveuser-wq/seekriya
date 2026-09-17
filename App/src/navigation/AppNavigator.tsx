@@ -1,10 +1,16 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
+import LiveExamScreen from "../screens/LiveExamScreen";
 import LoginScreen from "../screens/LoginScreen";
 import PracticeDrillScreen from "../screens/PracticeDrillScreen";
+import ProgressScreen from "../screens/ProgressScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 import SubjectDetailScreen from "../screens/SubjectDetailScreen";
 import SubjectsScreen from "../screens/SubjectsScreen";
+import TestInsightsScreen from "../screens/TestInsightsScreen";
+import TestResultScreen from "../screens/TestResultScreen";
+import TestsCenterScreen from "../screens/TestsCenterScreen";
 import TopicDrillScreen from "../screens/TopicDrillScreen";
 import TopicNotesScreen from "../screens/TopicNotesScreen";
 
@@ -16,6 +22,12 @@ export type RootStackParamList = {
   TopicDrill: { chapterId: string };
   TopicNotes: { topicId: string };
   Practice: undefined;
+  Tests: undefined;
+  LiveExam: undefined;
+  TestInsights: { testId: string };
+  TestResult: { resultId: string };
+  Progress: undefined;
+  Settings: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -30,6 +42,12 @@ export default function AppNavigator() {
       <Stack.Screen name="TopicDrill" component={TopicDrillScreen} />
       <Stack.Screen name="TopicNotes" component={TopicNotesScreen} />
       <Stack.Screen name="Practice" component={PracticeDrillScreen} />
+      <Stack.Screen name="Tests" component={TestsCenterScreen} />
+      <Stack.Screen name="LiveExam" component={LiveExamScreen} />
+      <Stack.Screen name="TestInsights" component={TestInsightsScreen} />
+      <Stack.Screen name="TestResult" component={TestResultScreen} />
+      <Stack.Screen name="Progress" component={ProgressScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }

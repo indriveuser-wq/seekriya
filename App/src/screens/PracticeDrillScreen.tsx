@@ -1,9 +1,10 @@
-import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AppBottomNav from "../components/AppBottomNav";
 import AppHeader from "../components/AppHeader";
+import CopilotCard from "../components/CopilotCard";
 import DrillActions from "../components/DrillActions";
 import DrillStatsBar from "../components/DrillStatsBar";
 import FeedbackCard from "../components/FeedbackCard";
@@ -12,10 +13,12 @@ import QuestionCard from "../components/QuestionCard";
 import { usePracticeDrill } from "../hooks/usePracticeDrill";
 import { mockLoginMeta, mockUserProfile } from "../mocks/auth.mock";
 import { colors } from "../theme/colors";
+import { monoText } from "../theme/typography";
 
 export default function PracticeDrillScreen() {
   const insets = useSafeAreaInsets();
   const { data, loading } = usePracticeDrill();
+  const [copilotVisible, setCopilotVisible] = useState(true);
 
   if (loading || !data) {
     return (
@@ -64,6 +67,19 @@ export default function PracticeDrillScreen() {
           onSaved={() => console.log("saved")}
           onNext={() => console.log("next-question")}
         />
+
+        {copilotVisible ? (
+          <>
+            <CopilotCard copilot={data.copilot} onClose={() => setCopilotVisible(false)} />
+            <View style={styles.copilotChips}>
+              {data.copilot.chips.map((chip) => (
+                <View key={chip} style={styles.copilotChip}>
+                  <Text style={styles.copilotChipText}>{chip}</Text>
+                </View>
+              ))}
+            </View>
+          </>
+        ) : null}
       </ScrollView>
 
       <AppBottomNav activeKey="practice" bottomInset={insets.bottom} />
@@ -88,5 +104,22 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     paddingBottom: 8,
+  },
+  copilotChips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+    marginTop: 10,
+    marginBottom: 8,
+  },
+  copilotChip: {
+    backgroundColor: "#E9EBF4",
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  copilotChipText: {
+    ...monoText(9.5, "600"),
+    color: colors.textPrimary,
   },
 });

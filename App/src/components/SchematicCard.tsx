@@ -25,6 +25,9 @@ export default function SchematicCard({ schematic }: { schematic: SchematicData 
         <View style={styles.middleCol}>
           <Text style={styles.reagent}>{schematic.middle.reagent}</Text>
           <Text style={styles.reagentSub}>{schematic.middle.reagentSub}</Text>
+            {schematic.middle.instant ? (
+            <Text style={styles.instantLabel}>{schematic.middle.instant}</Text>
+          ) : null}
           <MaterialIcons name="arrow-forward" size={16} color={colors.primary} style={styles.arrow} />
           <View style={styles.middleDot} />
         </View>
@@ -131,5 +134,10 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     textAlign: "center",
     marginTop: 10,
+  },
+    instantLabel: {
+    ...monoText(7, "600"),
+    color: "#9AA1B0",
+    marginTop: 3,
   },
 });

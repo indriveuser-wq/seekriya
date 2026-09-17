@@ -3,6 +3,9 @@ import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../navigation/AppNavigator";
 import AchievementRow from "../components/AchievementRow";
 import AppBottomNav from "../components/AppBottomNav";
 import AppHeader from "../components/AppHeader";
@@ -20,6 +23,7 @@ import { monoText } from "../theme/typography";
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { data, loading } = useHomeDashboard();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   if (loading || !data) {
     return (
@@ -40,7 +44,7 @@ export default function HomeScreen() {
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
         onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <ScrollView

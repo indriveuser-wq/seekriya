@@ -1,0 +1,132 @@
+import { TestInsightsData } from "../types/testInsights.types";
+
+export const mockTestInsights: TestInsightsData = {
+  meta: {
+    hubLabel: "ASCENSION TEST HUB",
+    batchChip: "Batch #094 • SEC-A",
+    completedLabel: "Completed Today, 11:42 AM",
+    evaluatedLabel: "Evaluated in 4.5s by Arohan Neural-V4",
+  },
+  hero: {
+    gradeChip: "GRADE 10 SEE",
+    unitChip: "Unit 3",
+    title: "Physical & Chemical Sciences",
+    subtitle: "Full Diagnostic & Model Scoring Breakdown",
+    score: "39",
+    scoreTotal: "/50",
+    standingLabel: "COHORT STANDING",
+    standingValue: "Rank 4 / 34",
+    efficiencyLabel: "TIME EFFICIENCY",
+    efficiencyValue: "38m 14s / 45m",
+    objectiveLabel: "Objective (MCQ):",
+    objectiveValue: "20/20 (100%)",
+    subjectiveLabel: "Subjective (Theory):",
+    subjectiveValue: "19/30 (63.3%)",
+    targetLabel: "Target Mastery: 90%+ for Distinction",
+    gapLabel: "Gap: 11 Marks Deficit",
+    provisionalTitle: "Provisional AI Evaluation Active",
+    provisionalSub: "Ramesh Sir manual verification queued for Q14 (Diagram clarity)",
+    provisionalChip: "PENDING",
+  },
+  gap: {
+    tag: "KEY LEARNING GAP DETECTED",
+    title: "Alkene/Alkyne Addition Reaction Proofs (Group C)",
+    segments: [
+      { text: "You lost " },
+      { text: "1.5 marks in Q12", bold: true, underline: true },
+      {
+        text: " because you omitted the catalytic conditions (Nickel catalyst at 150°C–200°C) and failed to mention the discharge of reddish-brown bromine water color in the chemical equation.",
+      },
+    ],
+    freqLabel: "HIGH CDC BOARD FREQUENCY",
+    freqNote: "Seen in 7 of last 10 board papers",
+  },
+  audit: {
+    sectionTitle: "Detailed Question Audit",
+    sectionHint: "Question 12 Focus",
+    qChip: "Q12 • Organic Chemistry",
+    groupChip: "Group C (Long Ans)",
+    score: "1.5 / 3.0",
+    scoreNote: "PARTIAL CREDIT",
+    questionText:
+      '"Explain why ethyne undergoes addition reactions more readily than ethene. Write a balanced chemical equation for the catalytic hydrogenation of ethyne into ethane."',
+    submittedTag: "SUBHAM'S SUBMITTED RESPONSE",
+    submittedChip: "Missing 2 Critical Components",
+    submittedText:
+      '"Ethyne contains a carbon-carbon triple bond with 2 pi bonds. The exposed pi bonds make it more susceptible to electrophilic addition compared to ethene.',
+    submittedEquation: "HC≡CH + H2 -> CH3-CH3",
+    submittedNote: "↑ [Catalytic reagent, temperature thresholds, and step-wise intermediate omitted]",
+    rubricTag: "CDC Board Stepwise Scoring Rubric",
+    rubricItems: [
+      {
+        icon: "check-circle",
+        tone: "blue",
+        title: "1. Electronic Structure & π-Bond Density",
+        body: "Accurately stated presence of 2 π-bonds causing elevated electrophilic susceptibility.",
+        score: "+1.0 / 1.0",
+      },
+      {
+        icon: "error",
+        tone: "amber",
+        title: "2. Balanced Stepwise Equation",
+        body: "Partial credit: Jumped straight to ethane without showing the intermediate ethene stage.",
+        score: "+0.5 / 1.0",
+      },
+      {
+        icon: "cancel",
+        tone: "crimson",
+        title: "3. Reaction Conditions & Catalyst",
+        body: "Zero credit: Failed to specify Finely divided Ni catalyst at 150°C–200°C over the arrow.",
+        score: "0.0 / 1.0",
+      },
+    ],
+    schemeTag: "OFFICIAL CDC MODEL SCHEME (CURRICULUM VETTED)",
+    schemeChip: "Full Credit Spec",
+    schemePoints: [
+      {
+        label: "Point 1 (Theory):",
+        text: " Ethyne possesses two reactive pi (π) bonds with concentrated cylindrical electron density, creating heightened thermodynamic instability and greater reactivity toward electrophiles than ethene.",
+      },
+      { label: "Point 2 (Step 1):", text: " HC≡CH + H₂ —[ Ni, 150°C-200°C ]→ H₂C=CH₂ (Ethene)", mono: true },
+      { label: "Point 3 (Step 2):", text: " H₂C=CH₂ + H₂ —[ Ni, 200°C ]→ H₃C-CH₃ (Ethane)", mono: true },
+      { label: "Overall Complete Equation:", text: " HC≡CH + 2H₂ —[ Ni / Pt, 200°C ]→ C₂H₆", mono: true },
+    ],
+    teacherName: "Ramesh Sir (Senior Science Faculty)",
+    teacherBadge: "Teacher Insight",
+    teacherQuote:
+      '"Remember Subham, in CDC marking guidelines, reaction conditions and catalysts carry half a mark alone! Always specify nickel or platinum whenever hydrogen gas is added."',
+    teacherAvatar:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCdZgBW4Ci_625HNthql9_N4CqPcj7XfvjQ5AarBNEpvD0woEUeEbKHD-A7De5MNxZGmVvtuk7uwwQbDCglSR_N4Z4Wote-FoXZahthoncuJVcEeAoxfLdjKsspQXfyy2ChWfsrWv2NyQHCKLjR6nBSsDy4XxET9-WKDw2tv21E4sKQPdrDyAp7GIADIei-IqAp8dHN6NNiTdBCCaxl3lBYkjbjdalZMLg0rNio8Os0LAuDGZqyMu8",
+    listenLabel: "Listen Voice Note (0:24s)",
+    replyLabel: "Reply to Sir",
+  },
+  otherLabel: "OTHER SECTION QUESTIONS",
+  otherQuestions: [
+    {
+      id: "q13",
+      icon: "check-circle",
+      tone: "blue",
+      title: "Q13 • Bromine Water Decolorization Test",
+      sub: "Correct: Selected 'Discharges reddish-brown to colorless'",
+      score: "2 / 2",
+    },
+    {
+      id: "q14",
+      icon: "draw",
+      tone: "amber",
+      title: "Q14 • Diagram: Methane Lab Prep",
+      sub: "Low confidence on gas jar delivery tube angle. Flagged for teacher.",
+      score: "3.5 / 5",
+      chip: "Provisional",
+    },
+  ],
+  recovery: {
+    title: "Launch Targeted Recovery Drill",
+    sub: "5 tailored rapid-fire questions covering Reaction Catalysts & Conditions",
+    xp: "+30 XP",
+  },
+  actions: [
+    { id: "notes", icon: "menu-book", tone: "blue", title: "Hydrocarbons Topic 4", sub: "Re-read Smart Notes" },
+    { id: "discuss", icon: "forum", tone: "purple", title: "Discuss with Ramesh Sir", sub: "Request Q12 Re-check" },
+  ],
+};

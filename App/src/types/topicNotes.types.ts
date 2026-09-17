@@ -45,7 +45,7 @@ export interface SchematicData {
   label: string;
   equation: string;
   left: { formula: string; name: string; chip: string };
-  middle: { reagent: string; reagentSub: string };
+  middle: { reagent: string; reagentSub: string; instant?: string };
   right: { formula: string; name: string; result: string };
   caption: string;
 }
@@ -77,4 +77,12 @@ export interface TopicNotesData {
   boardTipQuote: string;
   understood: { title: string; sub: string; toggleLabel: string };
   cta: { label: string; duration: string; xp: string };
+}
+
+export interface RichSegment {
+  text: string;
+  tone?: Tone;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
 }

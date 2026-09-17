@@ -26,6 +26,7 @@ export default function RichText({ segments, style }: RichTextProps) {
             segment.tone ? { color: TONE_COLOR[segment.tone] } : undefined,
             segment.bold ? { fontWeight: "700" } : undefined,
             segment.italic ? { fontStyle: "italic" } : undefined,
+            segment.underline ? { textDecorationLine: "underline" } : undefined,
           ]}
         >
           {segment.text}

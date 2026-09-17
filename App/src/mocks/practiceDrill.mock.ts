@@ -61,4 +61,10 @@ export const mockPracticeDrill: PracticeDrillData = {
   nextLabel: "NEXT QUESTION",
   targetPrefix: "Target: Complete 10 questions to unlock ",
   targetHighlight: "Hydrocarbons Mastery Badge",
+    copilot: {
+    title: "Arohan AI Copilot",
+    quote:
+      '"Remember the mnemonic: Alkenes \'Add\', Alkanes \'Substitute\'. Double bonds open their arms to welcome halogen guests without kicking out existing hydrogen atoms!"',
+    chips: ["NEB Syllabus Aligned", "Instant Audio Note Available"],
+  },
 };

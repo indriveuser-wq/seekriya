@@ -88,7 +88,7 @@ export const mockTopicNotes: TopicNotesData = {
     label: "BROMINE WATER ADDITION (ETHENE)",
     equation: "Br₂ (aq) + C₂H₄",
     left: { formula: "H₂C = CH₂", name: "Ethene (Gas)", chip: "Unsaturated" },
-    middle: { reagent: "+ Br₂ (aq)", reagentSub: "Reddish-Brown" },
+    middle: { reagent: "+ Br₂ (aq)", reagentSub: "Reddish-Brown", instant: "Instant" },
     right: { formula: "CH₂Br—CH₂Br", name: "1,2-Dibromoethane", result: "COLORLESS ✓" },
     caption:
       "The double bond breaks open. One bromine atom attaches to each carbon, causing the red color to dissipate immediately.",
