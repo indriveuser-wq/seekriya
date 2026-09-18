@@ -16,10 +16,10 @@ const TABS: {
   screen: keyof RootStackParamList;
 }[] = [
   { key: "dashboard", label: "Dashboard", icon: "grid-view", screen: "Teacher" },
-  { key: "notes", label: "Notes Studio", icon: "menu-book", screen: "Teacher" },
-  { key: "qbank", label: "Q-Bank", icon: "folder-copy", screen: "Teacher" },
+  { key: "notes", label: "Notes Studio", icon: "menu-book", screen: "NotesStudio" },
+  { key: "qbank", label: "Q-Bank", icon: "folder-copy", screen: "QuestionBank" },
   { key: "performance", label: "Performance", icon: "insights", screen: "TeacherCohort" },
-  { key: "settings", label: "Settings", icon: "tune", screen: "Settings" },
+  { key: "settings", label: "Settings", icon: "tune", screen: "TeacherSettings" },
 ];
 
 export default function TeacherBottomNav({

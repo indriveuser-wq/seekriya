@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/AppNavigator";
-import AppBottomNav from "../components/AppBottomNav";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import AppHeader from "../components/AppHeader";
 import CalibrationCard from "../components/CalibrationCard";
 import DraftQueueCard from "../components/DraftQueueCard";
 import QuestionStudioCard from "../components/QuestionStudioCard";
+import TeacherBottomNav from "../components/TeacherBottomNav"; // <-- Added this import
 import TeacherProfileCard from "../components/TeacherProfileCard";
 import TeacherTabs from "../components/TeacherTabs";
 import VettedRow from "../components/VettedRow";
 import { useTeacherDashboard } from "../hooks/useTeacherDashboard";
 import { mockLoginMeta, mockUserProfile } from "../mocks/auth.mock";
+import { RootStackParamList } from "../navigation/AppNavigator";
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 import { DraftCardModel } from "../types/teacher.types";
 
 export default function TeacherDashboardScreen() {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { data, loading } = useTeacherDashboard();
   const [activeTab, setActiveTab] = useState(0);
   const [drafts, setDrafts] = useState<DraftCardModel[]>([]);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     if (data) setDrafts(data.drafts);
@@ -49,7 +49,7 @@ export default function TeacherDashboardScreen() {
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
         onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => navigation.navigate("TeacherCohort")}
+        onAvatarPress={() => navigation.navigate("TeacherSettings")}
       />
 
       <ScrollView
@@ -94,7 +94,8 @@ export default function TeacherDashboardScreen() {
         <VettedRow vetted={data.vetted} onPress={() => console.log("vetted-history")} />
       </ScrollView>
 
-      <AppBottomNav activeKey="subjects" bottomInset={insets.bottom} />
+      {/* Fixed activeKey to "dashboard" */}
+      <TeacherBottomNav activeKey="dashboard" bottomInset={insets.bottom} />
     </View>
   );
 }

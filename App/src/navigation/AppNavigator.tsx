@@ -1,15 +1,19 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AICalibrationScreen from "../screens/AICalibrationScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LiveExamScreen from "../screens/LiveExamScreen";
 import LoginScreen from "../screens/LoginScreen";
+import NotesStudioScreen from "../screens/NotesStudioScreen";
 import PracticeDrillScreen from "../screens/PracticeDrillScreen";
 import ProgressScreen from "../screens/ProgressScreen";
+import QuestionBankScreen from "../screens/QuestionBankScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import SubjectDetailScreen from "../screens/SubjectDetailScreen";
 import SubjectsScreen from "../screens/SubjectsScreen";
 import TeacherCohortScreen from "../screens/TeacherCohortScreen";
 import TeacherDashboardScreen from "../screens/TeacherDashboardScreen";
+import TeacherSettingsScreen from "../screens/TeacherSettingsScreen";
 import TestInsightsScreen from "../screens/TestInsightsScreen";
 import TestResultScreen from "../screens/TestResultScreen";
 import TestsCenterScreen from "../screens/TestsCenterScreen";
@@ -32,6 +36,10 @@ export type RootStackParamList = {
   Settings: undefined;
   Teacher: undefined;
   TeacherCohort: undefined;
+  NotesStudio: undefined;
+  AICalibration: { paperId: string };
+  QuestionBank: undefined;
+  TeacherSettings: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -54,6 +62,10 @@ export default function AppNavigator() {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Teacher" component={TeacherDashboardScreen} />
       <Stack.Screen name="TeacherCohort" component={TeacherCohortScreen} />
+      <Stack.Screen name="NotesStudio" component={NotesStudioScreen} />
+      <Stack.Screen name="AICalibration" component={AICalibrationScreen} />
+      <Stack.Screen name="QuestionBank" component={QuestionBankScreen} />
+      <Stack.Screen name="TeacherSettings" component={TeacherSettingsScreen} />
     </Stack.Navigator>
   );
 }

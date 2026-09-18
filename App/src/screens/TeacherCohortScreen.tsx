@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native"; // <-- Add this
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"; // <-- Add this
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import ActivityRhythmCard from "../components/ActivityRhythmCard";
@@ -13,11 +15,13 @@ import PtmCard from "../components/PtmCard";
 import TeacherBottomNav from "../components/TeacherBottomNav";
 import { useCohort } from "../hooks/useCohort";
 import { mockTeacher } from "../mocks/teacher.mock";
+import { RootStackParamList } from "../navigation/AppNavigator"; // <-- Add this
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 
 export default function TeacherCohortScreen() {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>(); // <-- Add this
   const { data, loading } = useCohort();
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
@@ -64,7 +68,7 @@ export default function TeacherCohortScreen() {
           filters={data.filters}
           students={data.students}
           onNudge={(id) => console.log("nudge:", id)}
-          onDossier={(id) => console.log("dossier:", id)}
+          onDossier={(id) => navigation.navigate("AICalibration", { paperId: id })} // <-- Updated this
         />
 
         <ActivityRhythmCard rhythm={data.rhythm} />
@@ -86,6 +90,8 @@ export default function TeacherCohortScreen() {
     </View>
   );
 }
+
+// ... rest of the styles remain the same
 
 const styles = StyleSheet.create({
   root: {

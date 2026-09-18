@@ -10,10 +10,12 @@ export default function ModerationCard({ moderation }: { moderation: ModerationI
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <View style={styles.iconBox}>
-          <MaterialIcons name="verified-user" size={16} color="#6D28D9" />
+          <MaterialIcons name="verified-user" size={16} color={colors.white} />
         </View>
         <Text style={styles.title}>{moderation.title}</Text>
-        <Text style={styles.badge}>{moderation.badge}</Text>
+        <View style={styles.badgeBox}>
+          <Text style={styles.badge}>{moderation.badge}</Text>
+        </View>
       </View>
       <Text style={styles.body}>{moderation.body}</Text>
     </View>
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 10,
-    backgroundColor: "#D3C6F4",
+    backgroundColor: "#4338CA", // Dark indigo
     alignItems: "center",
     justifyContent: "center",
   },
@@ -46,9 +48,15 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: colors.textPrimary,
   },
+  badgeBox: {
+    backgroundColor: "#312E81", // Dark purple pill
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
   badge: {
-    ...monoText(9, "700"),
-    color: "#6D28D9",
+    ...monoText(8.5, "700"),
+    color: colors.white,
   },
   body: {
     fontSize: 11.5,
