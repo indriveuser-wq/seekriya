@@ -1,16 +1,25 @@
-import React from "react";
-import { ActivityIndicator, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import AIStudioCard from "../components/AIStudioCard";
 import CurriculumAuthorityCard from "../components/CurriculumAuthorityCard";
 import EvaluationCard from "../components/EvaluationCard";
 import InstitutionalCard from "../components/InstitutionalCard";
 import TeacherBottomNav from "../components/TeacherBottomNav";
-import TeacherSettingsProfileCard from "../components/TeacherSettingsProfileCard";
 import TeacherSettingsHeader from "../components/TeacherSettingsHeader";
+import TeacherSettingsProfileCard from "../components/TeacherSettingsProfileCard";
 import TeacherStatsGrid from "../components/TeacherStatsGrid";
-import AIStudioCard from "../components/AIStudioCard";
 import { useTeacherSettings } from "../hooks/useTeacherSettings";
 import { mockTeacher } from "../mocks/teacher.mock";
 import { colors } from "../theme/colors";
@@ -43,29 +52,38 @@ export default function TeacherSettingsScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
+        {/* Profile Card */}
         <TeacherSettingsProfileCard profile={data.profile} />
 
+        {/* Stats Grid */}
         <TeacherStatsGrid stats={data.stats} />
 
+        {/* Curriculum Authority */}
         <CurriculumAuthorityCard curriculum={data.curriculum} />
 
+        {/* AI Studio Calibration */}
         <AIStudioCard config={data.aiStudio} />
 
+        {/* Evaluation & Moderation */}
         <EvaluationCard config={data.evaluation} />
 
+        {/* Institutional Faculty Desk */}
         <InstitutionalCard
           items={data.institutional}
           onPress={(id) => console.log("institutional:", id)}
         />
 
+        {/* Terminate Button */}
         <Pressable style={styles.terminateButton}>
-          <MaterialIcons name="logout" size={15} color={colors.crimson} />
+          <MaterialIcons name="logout" size={18} color={colors.crimson} />
           <Text style={styles.terminateText}>{data.terminateLabel}</Text>
         </Pressable>
 
+        {/* Footer Build Info */}
         <Text style={styles.footerBuild}>{data.footerBuild}</Text>
       </ScrollView>
 
+      {/* Bottom Navigation */}
       <TeacherBottomNav activeKey="settings" bottomInset={insets.bottom} />
     </View>
   );
@@ -86,25 +104,26 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingBottom: 8,
+    padding: 12,
+    paddingBottom: 100, // Space for bottom nav
   },
   terminateButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 10,
     backgroundColor: "#FEE2E2",
     borderRadius: 12,
-    paddingVertical: 13,
+    paddingVertical: 14,
     marginTop: 16,
     marginHorizontal: 12,
   },
   terminateText: {
-    ...monoText(11, "700"),
+    ...monoText(12, "700"),
     color: colors.crimson,
   },
   footerBuild: {
-    ...monoText(8.5, "600"),
+    ...monoText(8, "600"),
     color: colors.textMuted,
     textAlign: "center",
     marginTop: 12,

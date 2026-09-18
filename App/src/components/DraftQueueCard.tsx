@@ -18,7 +18,7 @@ export default function DraftQueueCard({ draft, onReject, onEdit, onApprove }: D
     <View style={styles.container}>
       <View style={styles.chipsRow}>
         <View style={styles.draftChip}>
-          <MaterialIcons name="neurology" size={10} color={colors.white} />
+          <MaterialIcons name="psychology" size={10} color={colors.white} />
           <Text style={styles.draftChipText}>{draft.draftChip}</Text>
         </View>
         <Text style={styles.marksLabel}>{draft.marksLabel}</Text>
