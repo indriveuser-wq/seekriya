@@ -19,8 +19,8 @@ export default function TeacherSettingsHeader({
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 8 }]}>
-      <ArohanLogo size={34} borderRadius={10} />
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
+      <ArohanLogo size={44} borderRadius={12} />
 
       <View style={styles.titleWrap}>
         <View style={styles.titleRow}>
@@ -35,7 +35,7 @@ export default function TeacherSettingsHeader({
       <View style={styles.spacer} />
 
       <Pressable style={styles.bellButton} onPress={onNotification}>
-        <MaterialIcons name="notifications-none" size={19} color={colors.textPrimary} />
+        <MaterialIcons name="notifications-none" size={22} color={colors.textPrimary} />
         <View style={styles.bellDot} />
       </Pressable>
 
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingBottom: 10,
+    paddingHorizontal: 16,
+    paddingBottom: 14,
     backgroundColor: colors.surfaceLight,
     shadowColor: "#1B2559",
     shadowOpacity: 0.08,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   titleWrap: {
     flex: 1,
-    marginLeft: 8,
+    marginLeft: 12,
     marginRight: 8,
   },
   titleRow: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "700",
     color: colors.textPrimary,
   },
@@ -79,38 +79,38 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   gradeChipText: {
-    ...monoText(7.5, "700"),
+    ...monoText(8, "700"),
     color: colors.amber,
   },
   subtitle: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "600",
     color: colors.textPrimary,
-    marginTop: 1,
+    marginTop: 2,
   },
   spacer: {
     flex: 1,
   },
   bellButton: {
-    marginLeft: 10,
-    padding: 2,
+    marginLeft: 12,
+    padding: 4,
   },
   bellDot: {
     position: "absolute",
     top: 0,
     right: 0,
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: 7,
+    height: 7,
+    borderRadius: 4,
     backgroundColor: colors.crimson,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: colors.white,
   },
   avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 9,
-    marginLeft: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    marginLeft: 12,
     backgroundColor: colors.border,
   },
 });

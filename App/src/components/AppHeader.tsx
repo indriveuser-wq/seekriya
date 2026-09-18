@@ -28,8 +28,8 @@ export default function AppHeader({
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 8 }]}>
-      <ArohanLogo size={40} borderRadius={12} />
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
+      <ArohanLogo size={44} borderRadius={12} />
 
       <View style={styles.titleWrap}>
         <View style={styles.titleRow}>
@@ -51,7 +51,7 @@ export default function AppHeader({
       </View>
 
       <Pressable style={styles.iconButton} onPress={onNotificationPress}>
-        <MaterialCommunityIcons name="bell-outline" size={20} color={colors.textPrimary} />
+        <MaterialCommunityIcons name="bell-outline" size={22} color={colors.textPrimary} />
       </Pressable>
 
       <Pressable onPress={onAvatarPress}>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingBottom: 10,
+    paddingBottom: 14, // Increased from 10
     backgroundColor: colors.surfaceLight,
     shadowColor: "#1B2559",
     shadowOpacity: 0.08,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   titleWrap: {
-    marginLeft: 10,
+    marginLeft: 12, // Increased from 10
     flexShrink: 1,
   },
   titleRow: {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 16,
+    fontSize: 17, // Increased from 16
     fontWeight: "700",
     color: colors.textPrimary,
   },
@@ -95,16 +95,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primarySoft,
     borderRadius: 999,
     paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingVertical: 3, // Increased from 2
   },
   badgeText: {
     ...monoText(10, "700"),
     color: colors.primary,
   },
   subtitle: {
-    ...monoText(10),
+    ...monoText(11), // Increased from 10
     color: colors.textSecondary,
-    marginTop: 1,
+    marginTop: 2, // Increased from 1
   },
   spacer: {
     flex: 1,
@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cream,
     borderRadius: 999,
     paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingVertical: 7, // Increased from 6
     gap: 4,
   },
   streakEmoji: {
-    fontSize: 12,
+    fontSize: 13, // Increased from 12
   },
   streakValue: {
     ...monoText(12, "700"),
@@ -127,15 +127,15 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     marginLeft: 12,
-    padding: 4,
+    padding: 6, // Increased from 4
   },
   avatarWrap: {
     marginLeft: 10,
   },
   avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 40, // Increased from 36
+    height: 40, // Increased from 36
+    borderRadius: 12, // Increased from 10
     backgroundColor: colors.border,
   },
   avatarDot: {

@@ -40,16 +40,6 @@ export default function LoginScreen() {
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.surfaceLight} />
 
-      <AppHeader
-        title={mockLoginMeta.appName}
-        subtitle={mockLoginMeta.headerSubtitle}
-        badge={mockLoginMeta.gradeBadge}
-        streakDays={mockUserProfile.streakDays}
-        avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
-      />
-
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.content}
@@ -197,7 +187,6 @@ export default function LoginScreen() {
         </Pressable>
       </ScrollView>
 
-      <AppBottomNav activeKey="tests" bottomInset={insets.bottom} />
     </View>
   );
 }

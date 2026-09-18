@@ -26,12 +26,12 @@ export default function TopicDrillHeader({
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 6 }]}>
+    <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
       <Pressable onPress={onBack} hitSlop={10} style={styles.backButton}>
-        <MaterialIcons name="arrow-back-ios" size={20} color={colors.textPrimary} />
+        <MaterialIcons name="arrow-back-ios" size={22} color={colors.textPrimary} />
       </Pressable>
 
-      <ArohanLogo size={38} borderRadius={11} />
+      <ArohanLogo size={44} borderRadius={12} />
 
       <View style={styles.titleWrap}>
         <Text style={styles.title}>{title}</Text>
@@ -47,7 +47,7 @@ export default function TopicDrillHeader({
 
       {onNotification ? (
         <Pressable style={styles.bellButton} onPress={onNotification}>
-          <MaterialIcons name="notifications-none" size={19} color={colors.textPrimary} />
+          <MaterialIcons name="notifications-none" size={22} color={colors.textPrimary} />
         </Pressable>
       ) : null}
 
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 14,
-    paddingBottom: 10,
+    paddingHorizontal: 16,
+    paddingBottom: 14,
     backgroundColor: colors.surfaceLight,
     shadowColor: "#1B2559",
     shadowOpacity: 0.08,
@@ -74,18 +74,18 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   titleWrap: {
-    marginLeft: 10,
+    marginLeft: 12,
     flexShrink: 1,
   },
   title: {
-    ...monoText(13, "800"),
+    ...monoText(14, "800"),
     color: colors.textPrimary,
     letterSpacing: 0.6,
   },
   subtitle: {
-    ...monoText(10),
+    ...monoText(11),
     color: colors.textSecondary,
-    marginTop: 1,
+    marginTop: 2,
   },
   spacer: {
     flex: 1,
@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cream,
     borderRadius: 999,
     paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingVertical: 7,
     gap: 4,
   },
   streakEmoji: {
-    fontSize: 12,
+    fontSize: 13,
   },
   streakValue: {
     ...monoText(12, "700"),
@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
   },
   bellButton: {
     marginLeft: 12,
-    padding: 2,
+    padding: 4,
   },
   avatar: {
-    width: 34,
-    height: 34,
-    borderRadius: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     marginLeft: 12,
     backgroundColor: colors.border,
   },
