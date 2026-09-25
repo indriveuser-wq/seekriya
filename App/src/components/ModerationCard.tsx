@@ -4,8 +4,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 import { ModerationInfo } from "../types/testsCenter.types";
+import { ModerationCard as QuestionBankModeration } from "../types/questionBank.types";
 
-export default function ModerationCard({ moderation }: { moderation: ModerationInfo }) {
+export default function ModerationCard({
+  moderation,
+}: {
+  moderation: ModerationInfo | QuestionBankModeration;
+}) {
   return (
     <View style={styles.container}>
       <View style={styles.headerRow}>
@@ -17,7 +22,7 @@ export default function ModerationCard({ moderation }: { moderation: ModerationI
           <Text style={styles.badge}>{moderation.badge}</Text>
         </View>
       </View>
-      <Text style={styles.body}>{moderation.body}</Text>
+      <Text style={styles.body}>{"body" in moderation ? moderation.body : moderation.subtitle}</Text>
     </View>
   );
 }

@@ -26,6 +26,7 @@ export default function AppHeader({
   onAvatarPress,
 }: AppHeaderProps) {
   const insets = useSafeAreaInsets();
+  const [panel, setPanel] = React.useState<"streak" | "notifications" | null>(null);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
@@ -45,12 +46,12 @@ export default function AppHeader({
 
       <View style={styles.spacer} />
 
-      <View style={styles.streakPill}>
+      <Pressable style={styles.streakPill} onPress={() => setPanel("streak")}>
         <Text style={styles.streakEmoji}>🔥</Text>
         <Text style={styles.streakValue}>{streakDays}</Text>
-      </View>
+      </Pressable>
 
-      <Pressable style={styles.iconButton} onPress={onNotificationPress}>
+      <Pressable style={styles.iconButton} onPress={() => setPanel("notifications")}>
         <MaterialCommunityIcons name="bell-outline" size={22} color={colors.textPrimary} />
       </Pressable>
 
@@ -60,6 +61,23 @@ export default function AppHeader({
           <View style={styles.avatarDot} />
         </View>
       </Pressable>
+
+      {panel ? (
+        <View style={styles.panelLayer}>
+          <Pressable style={styles.panelDismiss} onPress={() => setPanel(null)} />
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>{panel === "streak" ? "Streak details" : "Notifications"}</Text>
+            <Text style={styles.modalBody}>
+              {panel === "streak"
+                ? `${streakDays}-day active streak. Keep learning today to protect it.`
+                : "You are all caught up. New examiner broadcasts will appear here."}
+            </Text>
+            <Pressable style={styles.modalButton} onPress={() => setPanel(null)}>
+              <Text style={styles.modalButtonText}>Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -68,6 +86,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
+    position: "relative",
+    zIndex: 100,
+    overflow: "visible",
     paddingHorizontal: 16,
     paddingBottom: 14, // Increased from 10
     backgroundColor: colors.surfaceLight,
@@ -75,7 +96,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 3,
+    elevation: 100,
   },
   titleWrap: {
     marginLeft: 12, // Increased from 10
@@ -148,5 +169,55 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gold,
     borderWidth: 2,
     borderColor: colors.surfaceLight,
+  },
+  panelLayer: {
+    position: "absolute",
+    zIndex: 1000,
+    elevation: 1000,
+    top: 70,
+    right: 12,
+    width: 280,
+  },
+  panelDismiss: {
+    position: "absolute",
+    top: -70,
+    right: -12,
+    bottom: -1000,
+    left: -1000,
+    backgroundColor: "rgba(15, 30, 78, 0.24)",
+  },
+  modalCard: {
+    width: 280,
+    backgroundColor: colors.surfaceLight,
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: colors.navy,
+    shadowOpacity: 0.2,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 8,
+  },
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.textPrimary,
+  },
+  modalBody: {
+    fontSize: 13,
+    lineHeight: 19,
+    color: colors.textSecondary,
+    marginTop: 8,
+  },
+  modalButton: {
+    alignSelf: "flex-end",
+    marginTop: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    backgroundColor: colors.primarySoft,
+  },
+  modalButtonText: {
+    ...monoText(10, "700"),
+    color: colors.primary,
   },
 });

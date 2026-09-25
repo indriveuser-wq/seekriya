@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   ScrollView,
   StatusBar,
@@ -44,7 +45,7 @@ export default function TeacherSettingsScreen() {
       <TeacherSettingsHeader
         header={data.header}
         avatarUrl={mockTeacher.profile.avatarUrl}
-        onNotification={() => console.log("notifications")}
+        onNotification={() => Alert.alert("Notifications", "You are all caught up.")}
       />
 
       <ScrollView
@@ -70,11 +71,14 @@ export default function TeacherSettingsScreen() {
         {/* Institutional Faculty Desk */}
         <InstitutionalCard
           items={data.institutional}
-          onPress={(id) => console.log("institutional:", id)}
+          onPress={(id) => Alert.alert("Institutional desk", `${id} is ready to configure.`)}
         />
 
         {/* Terminate Button */}
-        <Pressable style={styles.terminateButton}>
+        <Pressable
+          style={styles.terminateButton}
+          onPress={() => Alert.alert("End session", "Your session remains active on this device.")}
+        >
           <MaterialIcons name="logout" size={18} color={colors.crimson} />
           <Text style={styles.terminateText}>{data.terminateLabel}</Text>
         </Pressable>

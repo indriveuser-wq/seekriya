@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,7 +18,7 @@ import { colors } from "../theme/colors";
 
 type Props = NativeStackScreenProps<RootStackParamList, "TestResult">;
 
-export default function TestResultScreen({ route }: Props) {
+export default function TestResultScreen({ navigation, route }: Props) {
   const insets = useSafeAreaInsets();
   const { resultId } = route.params;
   const { data, loading } = useTestResult(resultId);
@@ -41,8 +41,8 @@ export default function TestResultScreen({ route }: Props) {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <ScrollView
@@ -74,8 +74,8 @@ export default function TestResultScreen({ route }: Props) {
           practiceLabel={data.practiceLabel}
           practiceChip={data.practiceChip}
           reviewLabel={data.reviewLabel}
-          onPractice={() => console.log("practice-weak-areas")}
-          onReview={() => console.log("review-answer-sheet")}
+          onPractice={() => navigation.navigate("Practice")}
+          onReview={() => navigation.navigate("TestInsights", { testId: resultId })}
         />
       </ScrollView>
 

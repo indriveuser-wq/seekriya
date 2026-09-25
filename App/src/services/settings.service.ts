@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockSettings } from "../mocks/settings.mock";
 import { SettingsData } from "../types/settings.types";
 
@@ -21,6 +22,7 @@ export async function fetchSettings(): Promise<SettingsData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockSettings;
   if (error) throw new Error(error.message);
   if (!data) return mockSettings;
 

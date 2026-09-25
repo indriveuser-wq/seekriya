@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import ScanSheetSection from "./ScanSheetSection";
 import { colors } from "../theme/colors";
@@ -15,6 +15,7 @@ export default function AnswerEditorCard({ editor, scanSheet }: AnswerEditorCard
   const [tab, setTab] = useState<"type" | "scan">("type");
   const [draft, setDraft] = useState(editor.draft);
   const [flagged, setFlagged] = useState(false);
+  const [attachmentVisible, setAttachmentVisible] = useState(true);
 
   return (
     <View style={styles.container}>
@@ -76,9 +77,10 @@ export default function AnswerEditorCard({ editor, scanSheet }: AnswerEditorCard
       ) : (
         <ScanSheetSection
           scanSheet={scanSheet}
-          onCamera={() => console.log("launch-camera")}
-          onGallery={() => console.log("gallery")}
-          onDelete={() => console.log("delete-attachment")}
+          onCamera={() => Alert.alert("Camera", "Camera capture is ready when a device camera is available.")}
+          onGallery={() => Alert.alert("Gallery", "Choose a saved answer image from your device.")}
+          onDelete={() => setAttachmentVisible(false)}
+          attachmentVisible={attachmentVisible}
         />
       )}
 

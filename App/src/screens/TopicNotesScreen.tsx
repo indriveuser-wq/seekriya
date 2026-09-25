@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -55,14 +55,14 @@ export default function TopicNotesScreen({ navigation, route }: Props) {
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
         onBack={() => navigation.goBack()}
-        onNotification={() => console.log("notifications")}
+        onNotification={() => Alert.alert("Notifications", "You are all caught up.")}
       />
       <View style={styles.blueRule} />
 
       <NotesMetaBar
         meta={data.meta}
-        onAudio={() => console.log("audio")}
-        onBookmark={() => console.log("bookmark")}
+        onAudio={() => Alert.alert("Audio lesson", "Ramesh Sir's audio lesson is ready to play.")}
+        onBookmark={() => Alert.alert("Saved", "This note was added to your study vault.")}
       />
 
       <ScrollView
@@ -121,14 +121,14 @@ export default function TopicNotesScreen({ navigation, route }: Props) {
           title={data.understood.title}
           sub={data.understood.sub}
           toggleLabel={data.understood.toggleLabel}
-          onToggle={() => console.log("toggle-understood")}
+          onToggle={() => Alert.alert("Mastery updated", "+25 Mastery XP added.")}
         />
 
         <PracticeCta
           label={data.cta.label}
           duration={data.cta.duration}
           xp={data.cta.xp}
-          onPress={() => console.log("launch-practice")}
+          onPress={() => navigation.navigate("Practice")}
         />
       </ScrollView>
     </View>

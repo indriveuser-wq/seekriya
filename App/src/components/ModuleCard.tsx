@@ -22,7 +22,13 @@ const BTN_STYLE: Record<string, { bg: string; text: string; border?: string }> =
   outline: { bg: "transparent", text: colors.textPrimary, border: "#D1D5DB" },
 };
 
-export default function ModuleCard({ module }: { module: ModuleCardModel }) {
+export default function ModuleCard({
+  module,
+  onAction,
+}: {
+  module: ModuleCardModel;
+  onAction: (module: ModuleCardModel, label: string) => void;
+}) {
   const statusTone = STATUS_TONE[module.timeOrStatus.tone];
 
   return (
@@ -96,9 +102,9 @@ export default function ModuleCard({ module }: { module: ModuleCardModel }) {
       </View>
 
       {module.extraIcon ? (
-        <View style={styles.extraIconBox}>
+        <Pressable style={styles.extraIconBox} onPress={() => onAction(module, "View details")}>
           <MaterialIcons name={module.extraIcon as any} size={16} color={colors.primary} />
-        </View>
+        </Pressable>
       ) : null}
     </View>
   );

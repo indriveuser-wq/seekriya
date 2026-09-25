@@ -16,12 +16,17 @@ export async function fetchSubjects(): Promise<SubjectsData> {
 
   const { data, error } = await supabase
     .from("subjects_dashboard")
-    .select("*")
+    .select("payload")
     .limit(1)
     .maybeSingle();
 
-  if (error) throw new Error(error.message);
-  if (!data) return mockSubjects;
+  if (error) {
+    if (error.code === "42P01" || error.code === "PGRST205") {
+      return mockSubjects;
+    }
+    throw new Error(error.message);
+  }
+  if (!data?.payload) return mockSubjects;
 
-  return data as SubjectsData;
+  return data.payload as SubjectsData;
 }

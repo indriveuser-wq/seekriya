@@ -4,6 +4,7 @@ import AICalibrationScreen from "../screens/AICalibrationScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LiveExamScreen from "../screens/LiveExamScreen";
 import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
 import NotesStudioScreen from "../screens/NotesStudioScreen";
 import PracticeDrillScreen from "../screens/PracticeDrillScreen";
 import ProgressScreen from "../screens/ProgressScreen";
@@ -12,6 +13,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import SubjectDetailScreen from "../screens/SubjectDetailScreen";
 import SubjectsScreen from "../screens/SubjectsScreen";
 import TeacherCohortScreen from "../screens/TeacherCohortScreen";
+import TeacherContentScreen from "../screens/TeacherContentScreen";
 import TeacherDashboardScreen from "../screens/TeacherDashboardScreen";
 import TeacherSettingsScreen from "../screens/TeacherSettingsScreen";
 import TestInsightsScreen from "../screens/TestInsightsScreen";
@@ -22,6 +24,7 @@ import TopicNotesScreen from "../screens/TopicNotesScreen";
 
 export type RootStackParamList = {
   Login: undefined;
+  Register: undefined;
   Home: undefined;
   Subjects: undefined;
   SubjectDetail: { subjectId: string };
@@ -36,6 +39,7 @@ export type RootStackParamList = {
   Settings: undefined;
   Teacher: undefined;
   TeacherCohort: undefined;
+  TeacherContent: undefined;
   NotesStudio: undefined;
   AICalibration: { paperId: string };
   QuestionBank: undefined;
@@ -48,6 +52,7 @@ export default function AppNavigator() {
   return (
     <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Subjects" component={SubjectsScreen} />
       <Stack.Screen name="SubjectDetail" component={SubjectDetailScreen} />
@@ -62,6 +67,7 @@ export default function AppNavigator() {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Teacher" component={TeacherDashboardScreen} />
       <Stack.Screen name="TeacherCohort" component={TeacherCohortScreen} />
+      <Stack.Screen name="TeacherContent" component={TeacherContentScreen} />
       <Stack.Screen name="NotesStudio" component={NotesStudioScreen} />
       <Stack.Screen name="AICalibration" component={AICalibrationScreen} />
       <Stack.Screen name="QuestionBank" component={QuestionBankScreen} />

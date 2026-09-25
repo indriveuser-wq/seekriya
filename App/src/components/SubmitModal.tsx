@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
@@ -22,9 +22,15 @@ export default function SubmitModal({
   onConfirm: () => void;
   onCancel: () => void;
 }) {
+  if (!visible) return null;
+
   return (
-    <Modal transparent visible={visible} animationType="fade" onRequestClose={onCancel}>
-      <View style={styles.overlay}>
+      <View
+        style={styles.overlay}
+        accessibilityViewIsModal
+        accessibilityRole="alert"
+        accessibilityLabel={submit.title}
+      >
         <View style={styles.card}>
           <View style={styles.iconBox}>
             <MaterialIcons name="assignment-turned-in" size={20} color={colors.primary} />
@@ -51,7 +57,6 @@ export default function SubmitModal({
           </Pressable>
         </View>
       </View>
-    </Modal>
   );
 }
 

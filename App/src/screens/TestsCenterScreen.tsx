@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -42,8 +42,8 @@ export default function TestsCenterScreen() {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <ScrollView
@@ -57,7 +57,7 @@ export default function TestsCenterScreen() {
           <AdaptiveHeroCard
             hero={data.hero}
             onStart={() => navigation.navigate("LiveExam")}
-            onSettings={() => console.log("adaptive-settings")}
+            onSettings={() => Alert.alert("Adaptive settings", "Adaptive evaluation settings are ready to configure.")}
           />
 
           <TestsStatsRow stats={data.stats} />

@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockNotesStudio } from "../mocks/notesStudio.mock";
 import { NotesStudioData } from "../types/notesStudio.types";
 
@@ -16,12 +17,13 @@ export async function fetchNotesStudio(): Promise<NotesStudioData> {
 
   const { data, error } = await supabase
     .from("notes_studio")
-    .select("*")
+    .select("payload")
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockNotesStudio;
   if (error) throw new Error(error.message);
   if (!data) return mockNotesStudio;
 
-  return data as NotesStudioData;
+  return (data?.payload ?? data) as NotesStudioData;
 }

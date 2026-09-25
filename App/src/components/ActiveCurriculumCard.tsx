@@ -5,7 +5,13 @@ import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 import { ActiveCurriculum } from "../types/notesStudio.types";
 
-export default function ActiveCurriculumCard({ curriculum }: { curriculum: ActiveCurriculum }) {
+export default function ActiveCurriculumCard({
+  curriculum,
+  onUpload,
+}: {
+  curriculum: ActiveCurriculum;
+  onUpload: () => void;
+}) {
   return (
     <View style={styles.container}>
       <View style={styles.headerRow}>
@@ -24,7 +30,7 @@ export default function ActiveCurriculumCard({ curriculum }: { curriculum: Activ
         <Text style={styles.edition}>{curriculum.editionLabel}</Text>
       </View>
 
-      <Pressable style={styles.uploadButton}>
+      <Pressable style={styles.uploadButton} onPress={onUpload}>
         <MaterialIcons name="add-circle-outline" size={16} color={colors.white} />
         <Text style={styles.uploadText}>{curriculum.uploadLabel}</Text>
         <MaterialIcons name="expand-more" size={18} color={colors.white} />

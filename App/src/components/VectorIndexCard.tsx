@@ -20,7 +20,7 @@ export default function VectorIndexCard({ vectorIndex }: { vectorIndex: VectorIn
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <View style={styles.headerLeft}>
-          <MaterialIcons name="neurology" size={14} color="#93C5FD" />
+          <MaterialIcons name="psychology" size={14} color="#93C5FD" />
           <Text style={styles.title}>{vectorIndex.title}</Text>
         </View>
         <MaterialIcons name="format-quote" size={20} color="rgba(255,255,255,0.4)" />

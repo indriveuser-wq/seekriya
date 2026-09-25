@@ -1,11 +1,10 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 import { Mission, MissionActionStyle, MissionIconKey } from "../types/dashboard.types";
 
-import { MaterialIcons } from "@expo/vector-icons";
 
 const ICONS: Record<MissionIconKey, {
   name: React.ComponentProps<typeof MaterialIcons>["name"];
@@ -34,7 +33,7 @@ export default function MissionRow({ mission, onPress }: MissionRowProps) {
   return (
     <View style={styles.container}>
       <View style={styles.iconBox}>
-        <MaterialCommunityIcons name={icon.name} size={20} color={icon.color} />
+        <MaterialIcons name={icon.name} size={20} color={icon.color} />
       </View>
 
       <View style={styles.textWrap}>

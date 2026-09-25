@@ -22,12 +22,13 @@ const VALUE_COLOR = {
 
 function StatCard({ stat }: { stat: CohortStat }) {
   const iconTone = TONE[stat.iconTone];
+  const iconName = stat.icon === "target" ? "track-changes" : stat.icon === "emergency-home" ? "home" : stat.icon;
   return (
     <View style={styles.card}>
       {stat.badge ? <View style={styles.badgeDot} /> : null}
       <View style={styles.topRow}>
         <View style={[styles.iconBox, { backgroundColor: iconTone.bg }]}>
-          <MaterialIcons name={stat.icon as any} size={15} color={iconTone.fg} />
+          <MaterialIcons name={iconName as any} size={15} color={iconTone.fg} />
         </View>
         <View style={styles.spacer} />
         {stat.chip ? (

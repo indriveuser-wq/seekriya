@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AppBottomNav from "../components/AppBottomNav";
@@ -14,11 +16,32 @@ import { usePracticeDrill } from "../hooks/usePracticeDrill";
 import { mockLoginMeta, mockUserProfile } from "../mocks/auth.mock";
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
+import { RootStackParamList } from "../navigation/AppNavigator";
+import { askAI, AIExplanation } from "../services/ai.service";
 
 export default function PracticeDrillScreen() {
   const insets = useSafeAreaInsets();
   const { data, loading } = usePracticeDrill();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [copilotVisible, setCopilotVisible] = useState(true);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [explaining, setExplaining] = useState(false);
+
+  const explainWithAI = async () => {
+    if (!data) return;
+    setExplaining(true);
+    try {
+      const result = await askAI<AIExplanation>({
+        action: "explain_answer",
+        context: `${data.question.text}\nSelected option: ${selectedOption ?? "none"}\nFeedback: ${data.feedback.titleLine1} ${data.feedback.titleLine2}`,
+      });
+      Alert.alert("AI explanation", result.explanation);
+    } catch (error: any) {
+      Alert.alert("AI unavailable", error?.message ?? "Deploy the ai-assistant Edge Function and try again.");
+    } finally {
+      setExplaining(false);
+    }
+  };
 
   if (loading || !data) {
     return (
@@ -38,8 +61,8 @@ export default function PracticeDrillScreen() {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <DrillStatsBar stats={data.stats} />
@@ -49,10 +72,14 @@ export default function PracticeDrillScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <QuestionCard question={data.question} onBookmark={() => console.log("bookmark")} />
+        <QuestionCard question={data.question} onBookmark={() => Alert.alert("Saved", "Question added to your drill vault.")} />
 
         {data.question.options.map((option) => (
-          <OptionRow key={option.key} option={option} onSelect={(key) => console.log("select:", key)} />
+          <OptionRow
+            key={option.key}
+            option={{ ...option, state: option.key === selectedOption ? "selected" : "idle" }}
+            onSelect={(key) => setSelectedOption(key)}
+          />
         ))}
 
         <FeedbackCard feedback={data.feedback} />
@@ -63,9 +90,9 @@ export default function PracticeDrillScreen() {
           nextLabel={data.nextLabel}
           targetPrefix={data.targetPrefix}
           targetHighlight={data.targetHighlight}
-          onExplain={() => console.log("explain")}
-          onSaved={() => console.log("saved")}
-          onNext={() => console.log("next-question")}
+          onExplain={explainWithAI}
+          onSaved={() => Alert.alert("Saved", "This question is in your drill vault.")}
+          onNext={() => navigation.navigate("Practice")}
         />
 
         {copilotVisible ? (

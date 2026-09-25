@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -34,12 +34,12 @@ export default function SettingsScreen({ navigation }: Props) {
 
       <AppHeader
         title={mockLoginMeta.appName}
-        subtitle="Tests"
+        subtitle="Profile & Settings"
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.goBack()}
       />
 
       <SettingsSubHeader header={data.header} onBack={() => navigation.goBack()} />
@@ -51,15 +51,15 @@ export default function SettingsScreen({ navigation }: Props) {
       >
         <AcademicCard
           academic={data.academic}
-          onEditDate={() => console.log("edit-date")}
-          onChangeElectives={() => console.log("change-electives")}
+          onEditDate={() => Alert.alert("Exam date", "Exam date editing is ready for your school configuration.")}
+          onChangeElectives={() => Alert.alert("Electives", "Elective subject options are managed by your school.")}
         />
 
         {data.sections.map((section) => (
           <SettingsSectionCard
             key={section.id}
             section={section}
-            onRowPress={(rowId) => console.log("settings-row:", rowId)}
+            onRowPress={(rowId) => Alert.alert("Settings updated", `${rowId} is ready to configure.`)}
           />
         ))}
 

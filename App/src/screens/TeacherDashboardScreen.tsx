@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -48,7 +48,7 @@ export default function TeacherDashboardScreen() {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
+        onNotificationPress={() => Alert.alert("Broadcasts", "No new examiner broadcasts.")}
         onAvatarPress={() => navigation.navigate("TeacherSettings")}
       />
 
@@ -63,13 +63,13 @@ export default function TeacherDashboardScreen() {
 
         <CalibrationCard
           calibration={data.calibration}
-          onReview={() => console.log("review-student-script")}
+          onReview={() => navigation.navigate("AICalibration", { paperId: "SUBHAM-Q14" })}
         />
 
         <QuestionStudioCard
           studio={data.studio}
-          onGenerate={() => console.log("generate-batch")}
-          onChangeFocus={() => console.log("change-focus")}
+          onGenerate={() => navigation.navigate("TeacherContent")}
+          onChangeFocus={() => navigation.navigate("TeacherContent")}
         />
 
         <View style={styles.queueHeader}>
@@ -86,12 +86,15 @@ export default function TeacherDashboardScreen() {
             key={draft.id}
             draft={draft}
             onReject={(id) => setDrafts((current) => current.filter((d) => d.id !== id))}
-            onEdit={(id) => console.log("edit-draft:", id)}
-            onApprove={(id) => setDrafts((current) => current.filter((d) => d.id !== id))}
+            onEdit={(id) => Alert.alert("Edit draft", `Draft ${id} is ready for editing.`)}
+            onApprove={(id) => {
+              setDrafts((current) => current.filter((d) => d.id !== id));
+              navigation.navigate("QuestionBank");
+            }}
           />
         ))}
 
-        <VettedRow vetted={data.vetted} onPress={() => console.log("vetted-history")} />
+        <VettedRow vetted={data.vetted} onPress={() => Alert.alert("Vetted history", "Approved question history is up to date.")} />
       </ScrollView>
 
       {/* Fixed activeKey to "dashboard" */}

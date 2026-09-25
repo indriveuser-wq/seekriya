@@ -23,7 +23,7 @@ export default function ProgressActions({
       </Pressable>
 
       <Pressable style={styles.exportButton} onPress={onExport}>
-        <MaterialIcons name="share-windows" size={14} color={colors.primary} />
+        <MaterialIcons name="share" size={14} color={colors.primary} />
         <Text style={styles.exportText}>{exportLabel}</Text>
       </Pressable>
     </>

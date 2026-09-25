@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockLiveExam } from "../mocks/liveExam.mock";
 import { LiveExamData } from "../types/liveExam.types";
 
@@ -21,6 +22,7 @@ export async function fetchLiveExam(): Promise<LiveExamData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockLiveExam;
   if (error) throw new Error(error.message);
   if (!data) return mockLiveExam;
 

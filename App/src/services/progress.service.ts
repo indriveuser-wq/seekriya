@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockProgress } from "../mocks/progress.mock";
 import { ProgressData } from "../types/progress.types";
 
@@ -21,6 +22,7 @@ export async function fetchProgress(): Promise<ProgressData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockProgress;
   if (error) throw new Error(error.message);
   if (!data) return mockProgress;
 

@@ -1,5 +1,6 @@
-import { USE_MOCK_DATA } from "../constants/config";
+import { USE_MOCK_DATA, USE_REMOTE_QUESTION_BANK } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockQuestionBank } from "../mocks/questionBank.mock";
 import { QuestionBankData } from "../types/questionBank.types";
 
@@ -7,7 +8,7 @@ const simulateLatency = (ms = 400) =>
   new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 export async function fetchQuestionBank(): Promise<QuestionBankData> {
-  if (USE_MOCK_DATA) {
+  if (USE_MOCK_DATA || !USE_REMOTE_QUESTION_BANK) {
     await simulateLatency();
     return mockQuestionBank;
   }
@@ -20,6 +21,7 @@ export async function fetchQuestionBank(): Promise<QuestionBankData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockQuestionBank;
   if (error) throw new Error(error.message);
   if (!data) return mockQuestionBank;
 

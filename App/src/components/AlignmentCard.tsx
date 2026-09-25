@@ -5,7 +5,13 @@ import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 import { AlignmentCardModel } from "../types/notesStudio.types";
 
-export default function AlignmentCard({ alignment }: { alignment: AlignmentCardModel }) {
+export default function AlignmentCard({
+  alignment,
+  onPress,
+}: {
+  alignment: AlignmentCardModel;
+  onPress: () => void;
+}) {
   return (
     <View style={styles.container}>
       <View style={styles.headerRow}>
@@ -18,7 +24,7 @@ export default function AlignmentCard({ alignment }: { alignment: AlignmentCardM
         </View>
       </View>
 
-      <Pressable style={styles.button}>
+      <Pressable style={styles.button} onPress={onPress}>
         <MaterialIcons name="flare" size={14} color={colors.white} />
         <Text style={styles.buttonText}>{alignment.buttonLabel}</Text>
         <View style={styles.buttonSubChip}>

@@ -29,7 +29,7 @@ const TABS: {
 
 export default function AppBottomNav({ activeKey, bottomInset = 0 }: AppBottomNavProps) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const route = useRoute<{ name: string }>();
+  const route = useRoute();
 
   return (
     <View style={[styles.container, { marginBottom: Math.max(bottomInset, 12) }]}>

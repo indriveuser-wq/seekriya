@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockSubjectDetail } from "../mocks/subjectDetail.mock";
 import { SubjectDetailData } from "../types/subjectDetail.types";
 
@@ -22,6 +23,7 @@ export async function fetchSubjectDetail(subjectId: string): Promise<SubjectDeta
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockSubjectDetail;
   if (error) throw new Error(error.message);
   if (!data) return mockSubjectDetail;
 

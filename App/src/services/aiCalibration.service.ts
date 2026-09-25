@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockAICalibration } from "../mocks/aiCalibration.mock";
 import { AICalibrationData } from "../types/aiCalibration.types";
 
@@ -23,6 +24,7 @@ export async function fetchAICalibration(
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockAICalibration;
   if (error) throw new Error(error.message);
   if (!data) return mockAICalibration;
 

@@ -30,7 +30,7 @@ export default function DraftQueueCard({ draft, onReject, onEdit, onApprove }: D
       </View>
 
       <View style={styles.questionBox}>
-        <RichText segments={draft.questionSegments} style={styles.questionText} />
+        <RichText segments={draft.questionSegments ?? []} style={styles.questionText} />
       </View>
 
       <View style={styles.schemeBox}>
@@ -41,8 +41,8 @@ export default function DraftQueueCard({ draft, onReject, onEdit, onApprove }: D
           <Text style={styles.schemeTotal}>{draft.schemeTotal}</Text>
         </View>
 
-        {draft.items.map((item) => (
-          <View key={item.marks} style={styles.itemRow}>
+        {draft.items.map((item, index) => (
+          <View key={`${item.marks}-${index}`} style={styles.itemRow}>
             <Text style={styles.bullet}>•</Text>
             <Text style={styles.itemText}>{item.text}</Text>
             <View style={styles.marksChip}>

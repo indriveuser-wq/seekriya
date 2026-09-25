@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -43,7 +43,7 @@ export default function HomeScreen() {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
+        onNotificationPress={() => Alert.alert("Examiner broadcasts", "You have no new broadcasts.")}
         onAvatarPress={() => navigation.navigate("Settings")}
       />
 
@@ -92,11 +92,10 @@ export default function HomeScreen() {
         />
         <ContinueLearningCard
           lesson={data.continueLesson}
-          onContinue={() => console.log("continue-lesson")}
+          onContinue={() => navigation.navigate("TopicDrill", { chapterId: "12" })}
         />
 
-        {/* Needs attention */}
-        <AttentionCard item={data.attention} onPractice={() => console.log("practice-now")} />
+        <AttentionCard item={data.attention} onPractice={() => navigation.navigate("Practice")} />
 
         {/* Today's focus */}
         <SectionHeader
@@ -106,7 +105,11 @@ export default function HomeScreen() {
           right={<Text style={styles.sectionRightGray}>Auto-curated</Text>}
         />
         {data.missions.map((mission) => (
-          <MissionRow key={mission.id} mission={mission} onPress={() => console.log(mission.id)} />
+          <MissionRow
+            key={mission.id}
+            mission={mission}
+            onPress={() => navigation.navigate("Practice")}
+          />
         ))}
 
         {/* Achievement */}
@@ -116,7 +119,7 @@ export default function HomeScreen() {
         <SocialProofRow proof={data.socialProof} />
       </ScrollView>
 
-      <AppBottomNav activeKey="tests" bottomInset={insets.bottom} />
+      <AppBottomNav activeKey="home" bottomInset={insets.bottom} />
     </View>
   );
 }

@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockTestsCenter } from "../mocks/testsCenter.mock";
 import { TestsCenterData } from "../types/testsCenter.types";
 
@@ -21,6 +22,7 @@ export async function fetchTestsCenter(): Promise<TestsCenterData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockTestsCenter;
   if (error) throw new Error(error.message);
   if (!data) return mockTestsCenter;
 

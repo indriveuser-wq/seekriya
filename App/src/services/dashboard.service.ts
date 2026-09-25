@@ -14,15 +14,21 @@ export async function fetchHomeDashboard(): Promise<HomeDashboardData> {
 
   if (!supabase) return mockDashboard;
 
-  // Expects a `student_dashboards` table/view shaped like HomeDashboardData.
+  // The dashboard is optional while the backend is being provisioned.
   const { data, error } = await supabase
     .from("student_dashboards")
-    .select("*")
+    .select("payload")
     .limit(1)
     .maybeSingle();
 
-  if (error) throw new Error(error.message);
-  if (!data) return mockDashboard;
+  if (error) {
+    // PostgREST returns 404/42P01 when the optional relation is not deployed yet.
+    if (error.code === "42P01" || error.code === "PGRST205") {
+      return mockDashboard;
+    }
+    throw new Error(error.message);
+  }
+  if (!data?.payload) return mockDashboard;
 
-  return data as HomeDashboardData;
+  return data.payload as HomeDashboardData;
 }

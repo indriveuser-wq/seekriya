@@ -1,12 +1,10 @@
 import React from "react";
 import { Alert, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
-import AppBottomNav from "../components/AppBottomNav";
 import AppHeader from "../components/AppHeader";
 import ArohanLogo from "../components/ArohanLogo";
 import CheckboxRow from "../components/CheckboxRow";
@@ -14,18 +12,16 @@ import ComplianceBanner from "../components/ComplianceBanner";
 import DividerWithText from "../components/DividerWithText";
 import ExamCountdownCard from "../components/ExamCountdownCard";
 import InputField from "../components/InputField";
-import NepalFlagIcon from "../components/NepalFlagIcon";
 import PrimaryButton from "../components/PrimaryButton";
 import RoleToggle from "../components/RoleToggle";
 import SocialAuthButton from "../components/SocialAuthButton";
 import { useExamCountdown } from "../hooks/useExamCountdown";
 import { useLoginForm } from "../hooks/useLoginForm";
-import { mockLoginMeta, mockUserProfile } from "../mocks/auth.mock";
+import { requestPasswordReset } from "../services/auth.service";
 import { colors } from "../theme/colors";
 import { monoText } from "../theme/typography";
 
 export default function LoginScreen() {
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const form = useLoginForm((user) => {
   if (user.role === "teacher") {
@@ -50,12 +46,12 @@ export default function LoginScreen() {
         <View style={styles.chipsRow}>
           <View style={styles.chip}>
             <View style={styles.chipDot} />
-            <Text style={styles.chipText}>{mockLoginMeta.gridLabel}</Text>
+            <Text style={styles.chipText}>CDC 2081/82 GRID</Text>
           </View>
 
           <Pressable style={styles.chip}>
             <MaterialCommunityIcons name="translate" size={14} color={colors.primary} />
-            <Text style={styles.chipText}>{mockLoginMeta.languageLabel}</Text>
+            <Text style={styles.chipText}>Nepali / English</Text>
           </Pressable>
         </View>
 
@@ -70,11 +66,11 @@ export default function LoginScreen() {
           </View>
 
           <Text style={styles.heroTitle}>
-            <Text style={styles.heroTitleDark}>{mockLoginMeta.appName} </Text>
-            <Text style={styles.heroTitleBlue}>{mockLoginMeta.appNameNe}</Text>
+            <Text style={styles.heroTitleDark}>Arohan SEE </Text>
+            <Text style={styles.heroTitleBlue}>(Arohan)</Text>
           </Text>
 
-          <Text style={styles.heroSubtitle}>{mockLoginMeta.tagline}</Text>
+          <Text style={styles.heroSubtitle}>Nepal Grade 10 curriculum and exam readiness</Text>
         </View>
 
         {/* Role toggle */}
@@ -84,25 +80,25 @@ export default function LoginScreen() {
         <View style={styles.loggingRow}>
           <View style={styles.loggingDot} />
           <Text style={styles.loggingText} numberOfLines={1}>
-            {`Logging in as ${mockUserProfile.gradeLabel} (${mockUserProfile.fullName})`}
+            {`Sign in as ${form.role === "teacher" ? "Teacher / Examiner" : "Student Aspirant"}`}
           </Text>
           <Text style={styles.loggingActive}>
-            {mockUserProfile.isActive ? "ACTIVE" : "INACTIVE"}
+            READY
           </Text>
         </View>
 
         {/* Form card */}
         <View style={styles.card}>
-          <Text style={styles.fieldLabel}>MOBILE NUMBER / SEE SYMBOL ID</Text>
+          <Text style={styles.fieldLabel}>EMAIL ADDRESS</Text>
           <InputField
-            value={form.identifier}
-            onChangeText={form.setIdentifier}
-            placeholder="SEE-2081-0492"
-            autoCapitalize="characters"
+            value={form.email}
+            onChangeText={form.setEmail}
+            placeholder="you@example.com"
+            autoCapitalize="none"
+            keyboardType="email-address"
             leftAdornment={
               <View style={styles.prefix}>
-                <NepalFlagIcon size={18} />
-                <Text style={styles.prefixText}>+977</Text>
+                <MaterialIcons name="email" size={18} color={colors.primary} />
               </View>
             }
             rightAdornment={<MaterialIcons name="verified" size={20} color={colors.primary} />}
@@ -110,8 +106,21 @@ export default function LoginScreen() {
 
           <View style={styles.passwordLabelRow}>
             <Text style={styles.fieldLabel}>SECURITY PASSWORD / PIN</Text>
-            <Pressable onPress={() => console.log("reset-with-sms")}>
-              <Text style={styles.resetLink}>Reset with SMS</Text>
+            <Pressable
+              onPress={async () => {
+                if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+                  Alert.alert("Enter your email", "Provide a valid email address first.");
+                  return;
+                }
+                try {
+                  await requestPasswordReset(form.email);
+                  Alert.alert("Reset email sent", "Check your inbox for the password reset link.");
+                } catch (error: any) {
+                  Alert.alert("Reset failed", error?.message ?? "Unable to send the reset email.");
+                }
+              }}
+            >
+              <Text style={styles.resetLink}>Reset by email</Text>
             </Pressable>
           </View>
           <InputField
@@ -138,12 +147,7 @@ export default function LoginScreen() {
             checked={form.keepActive}
             onToggle={form.toggleKeepActive}
             label="Keep active for daily streaks"
-            rightAdornment={
-              <View style={styles.streakNote}>
-                <Text style={styles.streakNoteEmoji}>🔥</Text>
-                <Text style={styles.streakNoteText}>5x Streak</Text>
-              </View>
-            }
+            rightAdornment={<MaterialIcons name="verified-user" size={18} color={colors.primary} />}
           />
 
           <PrimaryButton
@@ -159,12 +163,12 @@ export default function LoginScreen() {
             <SocialAuthButton
               label="School Google"
               icon={<MaterialIcons name="domain" size={20} color={colors.primary} />}
-              onPress={() => console.log("school-google")}
+              onPress={() => Alert.alert("School Google", "School SSO is ready for connection.")}
             />
             <SocialAuthButton
               label="Teacher Pass QR"
               icon={<MaterialIcons name="qr-code-scanner" size={20} color={colors.purple} />}
-              onPress={() => console.log("teacher-pass-qr")}
+              onPress={() => Alert.alert("Teacher Pass QR", "Scan a valid teacher pass to continue.")}
             />
           </View>
         </View>
@@ -174,15 +178,18 @@ export default function LoginScreen() {
           <ExamCountdownCard
             daysToExam={countdown.daysToExam}
             candidatesCount={countdown.candidatesCount}
-            onPress={() => console.log("countdown")}
+            onPress={() => Alert.alert("SEE Countdown", `${countdown.daysToExam} days remain until the exam.`)}
           />
         )}
 
-        <ComplianceBanner text={mockLoginMeta.complianceNote} />
+        <ComplianceBanner text="CDC Nepal curriculum compliant" />
 
-        <Pressable style={styles.registerRow} onPress={() => console.log("register")}>
+        <Pressable
+          style={styles.registerRow}
+          onPress={() => navigation.navigate("Register")}
+        >
           <Text style={styles.registerText}>Don't have an Arohan account? </Text>
-          <Text style={styles.registerLink}>Register with School Code</Text>
+          <Text style={styles.registerLink}>Create an account with email</Text>
           <MaterialIcons name="chevron-right" size={16} color={colors.primary} />
         </Pressable>
       </ScrollView>

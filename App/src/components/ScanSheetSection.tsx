@@ -10,11 +10,13 @@ export default function ScanSheetSection({
   onCamera,
   onGallery,
   onDelete,
+  attachmentVisible = true,
 }: {
   scanSheet: ScanSheet;
   onCamera?: () => void;
   onGallery?: () => void;
   onDelete?: () => void;
+  attachmentVisible?: boolean;
 }) {
   return (
     <View style={styles.container}>
@@ -38,7 +40,7 @@ export default function ScanSheetSection({
         </Pressable>
       </View>
 
-      <View style={styles.attachmentRow}>
+      {attachmentVisible ? <View style={styles.attachmentRow}>
         <MaterialIcons name="image" size={16} color={colors.primary} />
         <View style={styles.attachmentText}>
           <Text style={styles.attachmentName}>{scanSheet.attachment.name}</Text>
@@ -50,7 +52,7 @@ export default function ScanSheetSection({
         <Pressable onPress={onDelete} hitSlop={8}>
           <MaterialIcons name="delete" size={15} color={colors.crimson} />
         </Pressable>
-      </View>
+      </View> : null}
     </View>
   );
 }

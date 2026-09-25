@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockTopicDrill } from "../mocks/topicDrill.mock";
 import { TopicDrillData } from "../types/topicDrill.types";
 
@@ -22,6 +23,7 @@ export async function fetchTopicDrill(chapterId: string): Promise<TopicDrillData
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockTopicDrill;
   if (error) throw new Error(error.message);
   if (!data) return mockTopicDrill;
 

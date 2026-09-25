@@ -43,7 +43,11 @@ export default function ProfileHeroCard({ profile }: { profile: ProfileHero }) {
               {stat.iconKind === "emoji" ? (
                 <Text style={styles.statEmoji}>{stat.icon}</Text>
               ) : (
-                <MaterialIcons name={stat.icon as any} size={12} color={TONE_COLOR[stat.tone]} />
+                <MaterialIcons
+                  name={(stat.icon === "target" ? "track-changes" : stat.icon) as any}
+                  size={12}
+                  color={TONE_COLOR[stat.tone]}
+                />
               )}
               <Text style={styles.statLabel}>{stat.label}</Text>
             </View>

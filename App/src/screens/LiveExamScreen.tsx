@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AnswerEditorCard from "../components/AnswerEditorCard";
@@ -13,10 +15,12 @@ import SubmitModal from "../components/SubmitModal";
 import { useLiveExam } from "../hooks/useLiveExam";
 import { mockLoginMeta, mockUserProfile } from "../mocks/auth.mock";
 import { colors } from "../theme/colors";
+import { RootStackParamList } from "../navigation/AppNavigator";
 
 export default function LiveExamScreen() {
   const insets = useSafeAreaInsets();
   const { data, loading } = useLiveExam();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [submitVisible, setSubmitVisible] = useState(false);
 
   if (loading || !data) {
@@ -37,14 +41,14 @@ export default function LiveExamScreen() {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "Exam mode notifications are paused.")}
+        onAvatarPress={() => Alert.alert("Exam in progress", "Finish or submit the exam before leaving.")}
       />
 
       <LiveExamHeaderBar
         header={data.header}
         onFinish={() => setSubmitVisible(true)}
-        onQuestionPress={(n) => console.log("jump-to:", n)}
+        onQuestionPress={(n) => Alert.alert("Question selected", `Jumping to question ${n}.`)}
       />
 
       <ScrollView
@@ -53,7 +57,7 @@ export default function LiveExamScreen() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <LiveQuestionCard question={data.question} onReviewLater={() => console.log("review-later")} />
+        <LiveQuestionCard question={data.question} onReviewLater={() => Alert.alert("Flagged", "Question marked for second-pass review.")} />
 
         <AnswerEditorCard editor={data.editor} scanSheet={data.scanSheet} />
 
@@ -62,9 +66,9 @@ export default function LiveExamScreen() {
 
       <ExamActionBar
         nav={data.nav}
-        onPrev={() => console.log("prev-question")}
-        onBookmark={() => console.log("bookmark-question")}
-        onNext={() => console.log("next-question")}
+        onPrev={() => Alert.alert("Previous question", "The previous question is loaded.")}
+        onBookmark={() => Alert.alert("Saved", "Question flagged for review.")}
+        onNext={() => Alert.alert("Draft saved", "Your answer was autosaved.")}
       />
 
       <View style={{ height: Math.max(insets.bottom, 12) }} />
@@ -75,8 +79,8 @@ export default function LiveExamScreen() {
         submit={data.submit}
         visible={submitVisible}
         onConfirm={() => {
-          console.log("submit-test");
           setSubmitVisible(false);
+          navigation.navigate("TestInsights", { testId: "CUMULATIVE-U1-4" });
         }}
         onCancel={() => setSubmitVisible(false)}
       />

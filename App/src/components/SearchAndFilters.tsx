@@ -7,9 +7,18 @@ import { monoText } from "../theme/typography";
 interface SearchAndFiltersProps {
   placeholder: string;
   tabs: string[];
+  searchValue: string;
+  onSearchChange: (value: string) => void;
+  onTabChange: (index: number) => void;
 }
 
-export default function SearchAndFilters({ placeholder, tabs }: SearchAndFiltersProps) {
+export default function SearchAndFilters({
+  placeholder,
+  tabs,
+  searchValue,
+  onSearchChange,
+  onTabChange,
+}: SearchAndFiltersProps) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -20,6 +29,8 @@ export default function SearchAndFilters({ placeholder, tabs }: SearchAndFilters
           style={styles.input}
           placeholder={placeholder}
           placeholderTextColor={colors.textMuted}
+          value={searchValue}
+          onChangeText={onSearchChange}
         />
         <MaterialIcons name="tune" size={18} color={colors.textMuted} />
       </View>
@@ -31,7 +42,10 @@ export default function SearchAndFilters({ placeholder, tabs }: SearchAndFilters
             <Pressable
               key={tab}
               style={[styles.tab, active && styles.tabActive]}
-              onPress={() => setActiveTab(index)}
+              onPress={() => {
+                setActiveTab(index);
+                onTabChange(index);
+              }}
             >
               <Text style={[styles.tabText, active && styles.tabTextActive]}>{tab}</Text>
             </Pressable>

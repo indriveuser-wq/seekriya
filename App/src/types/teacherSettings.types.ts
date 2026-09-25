@@ -83,7 +83,7 @@ export interface InstitutionalItem {
 }
 
 export interface TeacherSettingsData {
-  header: TeacherSettingsHeader;
+  header: TeacherSettingsHeaderInfo;
   profile: TeacherProfile;
   stats: StatCard[];
   curriculum: CurriculumAuthority;

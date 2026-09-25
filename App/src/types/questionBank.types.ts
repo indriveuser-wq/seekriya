@@ -66,7 +66,7 @@ export interface ApprovedQuestion {
 }
 
 export interface QuestionBankData {
-  header: QuestionBankHeader;
+  header: QuestionBankHeaderInfo;
   title: UnifiedTitle;
   tabs: TabItem[];
   moderation: ModerationCard;

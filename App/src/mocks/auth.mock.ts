@@ -13,7 +13,7 @@ export const mockUserProfile: UserProfile = {
 };
 
 export const mockCredentials = {
-  identifier: "SEE-2081-0492",
+  email: "subham@example.com",
   password: "see2081pin",
 };
 

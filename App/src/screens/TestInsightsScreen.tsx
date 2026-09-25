@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -21,7 +21,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "TestInsights">;
 
 export default function TestInsightsScreen({ navigation, route }: Props) {
   const insets = useSafeAreaInsets();
-  const { testId } = route.params;
+  const testId = route.params?.testId ?? "CUMULATIVE-U1-4";
   const { data, loading } = useTestInsights(testId);
 
   if (loading || !data) {
@@ -38,12 +38,12 @@ export default function TestInsightsScreen({ navigation, route }: Props) {
 
       <AppHeader
         title={mockLoginMeta.appName}
-        subtitle="Subjects"
+        subtitle="Tests"
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <InsightsSubHeader meta={data.meta} onBack={() => navigation.goBack()} />
@@ -58,8 +58,8 @@ export default function TestInsightsScreen({ navigation, route }: Props) {
           <GapCard gap={data.gap} />
           <QuestionAuditCard
             audit={data.audit}
-            onListen={() => console.log("listen-voice-note")}
-            onReply={() => console.log("reply-to-sir")}
+            onListen={() => Alert.alert("Voice note", "Ramesh Sir's feedback is ready to play.")}
+            onReply={() => Alert.alert("Teacher Q&A", "Your question has been prepared for Ramesh Sir.")}
           />
           <OtherQuestions
   label={data.otherLabel}
@@ -70,13 +70,13 @@ export default function TestInsightsScreen({ navigation, route }: Props) {
             title={data.recovery.title}
             sub={data.recovery.sub}
             xp={data.recovery.xp}
-            onPress={() => console.log("recovery-drill")}
+            onPress={() => navigation.navigate("Practice")}
           />
-          <InsightActions actions={data.actions} onPress={(id) => console.log("insight-action:", id)} />
+          <InsightActions actions={data.actions} onPress={(id) => Alert.alert("Diagnostic action", `${id} is ready.`)} />
         </View>
       </ScrollView>
 
-      <AppBottomNav activeKey="subjects" bottomInset={insets.bottom} />
+      <AppBottomNav activeKey="tests" bottomInset={insets.bottom} />
     </View>
   );
 }

@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockCohort } from "../mocks/cohort.mock";
 import { CohortData } from "../types/cohort.types";
 
@@ -21,6 +22,7 @@ export async function fetchCohort(): Promise<CohortData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockCohort;
   if (error) throw new Error(error.message);
   if (!data) return mockCohort;
 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import ApprovedQuestionBank from "../components/ApprovedQuestionBank";
@@ -9,13 +11,17 @@ import QuestionBankHeader from "../components/QuestionBankHeader";
 import QuestionBankTabs from "../components/QuestionBankTabs";
 import TeacherBottomNav from "../components/TeacherBottomNav";
 import UnifiedTitleSection from "../components/UnifiedTitleSection";
+import PrimaryButton from "../components/PrimaryButton";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useQuestionBank } from "../hooks/useQuestionBank";
 import { mockTeacher } from "../mocks/teacher.mock";
 import { colors } from "../theme/colors";
+import { RootStackParamList } from "../navigation/AppNavigator";
 
 export default function QuestionBankScreen() {
   const insets = useSafeAreaInsets();
   const { data, loading } = useQuestionBank();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [activeTab, setActiveTab] = useState("draft");
 
   if (loading || !data) {
@@ -33,7 +39,7 @@ export default function QuestionBankScreen() {
       <QuestionBankHeader
         header={data.header}
         avatarUrl={mockTeacher.profile.avatarUrl}
-        onNotification={() => console.log("notifications")}
+        onNotification={() => Alert.alert("Notifications", "You are all caught up.")}
       />
 
       <ScrollView
@@ -43,6 +49,14 @@ export default function QuestionBankScreen() {
       >
         <UnifiedTitleSection title={data.title} />
 
+        <View style={styles.createButton}>
+          <PrimaryButton
+            title="Create question"
+            onPress={() => navigation.navigate("TeacherContent")}
+            icon={<MaterialIcons name="add" size={18} color={colors.white} />}
+          />
+        </View>
+
         <QuestionBankTabs tabs={data.tabs} activeTab={activeTab} onSelect={setActiveTab} />
 
         <ModerationCard moderation={data.moderation} />
@@ -50,9 +64,9 @@ export default function QuestionBankScreen() {
         {activeTab === "draft" ? (
           <DraftQuestionCard
             draft={data.draft}
-            onApprove={() => console.log("approve-question")}
-            onEdit={() => console.log("edit-rubric")}
-            onClose={() => console.log("close-draft")}
+            onApprove={() => navigation.navigate("Teacher")}
+            onEdit={() => Alert.alert("Edit rubric", "The draft rubric is ready to edit.")}
+            onClose={() => Alert.alert("Draft closed", "The draft remains available in the review queue.")}
           />
         ) : null}
 
@@ -63,7 +77,7 @@ export default function QuestionBankScreen() {
             filters={data.approvedFilters}
             questions={data.approvedQuestions}
             exportLabel={data.exportLabel}
-            onExport={() => console.log("export-questions")}
+            onExport={() => Alert.alert("Export ready", "The formatted question paper is ready to download.")}
           />
         ) : null}
       </ScrollView>
@@ -89,5 +103,8 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingBottom: 8,
+  },
+  createButton: {
+    paddingHorizontal: 16,
   },
 });

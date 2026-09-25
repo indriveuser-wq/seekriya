@@ -30,7 +30,7 @@ export default function InputField({
       {leftAdornment}
       <TextInput
         style={[styles.input, letterSpacing ? { letterSpacing } : undefined]}
-        value={value}
+        value={value ?? ""}
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor={colors.textMuted}

@@ -30,7 +30,7 @@ export default function TeacherBottomNav({
   bottomInset?: number;
 }) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const route = useRoute<{ name: string }>();
+  const route = useRoute();
 
   return (
     <View style={[styles.container, { marginBottom: Math.max(bottomInset, 12) }]}>
@@ -45,7 +45,7 @@ export default function TeacherBottomNav({
               navigation.navigate(tab.screen as any);
             }}
           >
-            <MaterialIcons name={tab.icon} size={19} color={active ? "#5B21B6" : "#3A3F4E"} />
+            <MaterialIcons name={tab.icon} size={19} color={active ? colors.primary : "#3A3F4E"} />
             <Text style={[styles.label, active && styles.labelActive]}>{tab.label}</Text>
           </Pressable>
         );
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
   },
   labelActive: {
-    color: "#5B21B6",
+    color: colors.primary,
     fontWeight: "700",
   },
 });

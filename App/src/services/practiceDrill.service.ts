@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockPracticeDrill } from "../mocks/practiceDrill.mock";
 import { PracticeDrillData } from "../types/practiceDrill.types";
 
@@ -21,6 +22,7 @@ export async function fetchPracticeDrill(): Promise<PracticeDrillData> {
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockPracticeDrill;
   if (error) throw new Error(error.message);
   if (!data) return mockPracticeDrill;
 

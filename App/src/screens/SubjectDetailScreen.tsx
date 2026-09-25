@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -42,12 +42,12 @@ export default function SubjectDetailScreen({ navigation, route }: Props) {
 
       <AppHeader
         title={mockLoginMeta.appName}
-        subtitle="Tests"
+        subtitle="Subjects"
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       {/* Sub-header: back + CDC code */}
@@ -82,10 +82,13 @@ export default function SubjectDetailScreen({ navigation, route }: Props) {
           />
         ))}
 
-        <BoardMockCard mock={data.boardMock} onPress={() => console.log("launch-drill")} />
+        <BoardMockCard
+          mock={data.boardMock}
+          onPress={() => navigation.navigate("LiveExam")}
+        />
       </ScrollView>
 
-      <AppBottomNav activeKey="tests" bottomInset={insets.bottom} />
+      <AppBottomNav activeKey="subjects" bottomInset={insets.bottom} />
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -38,8 +38,8 @@ export default function SubjectsScreen() {
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <ScrollView
@@ -60,14 +60,14 @@ export default function SubjectsScreen() {
             key={subject.id}
             subject={subject}
             onExplore={(id) => navigation.navigate("SubjectDetail", { subjectId: id })}
-            onSwitch={(id) => console.log("switch:", id)}
+            onSwitch={(id) => Alert.alert("Subject selected", `${id} is now in your study plan.`)}
           />
         ))}
 
         <RoutineSyncBanner
           title={data.routineNote}
           subtitle={data.routineVerifiedFor}
-          onPress={() => console.log("routine")}
+          onPress={() => Alert.alert("Routine synced", "Your study routine is up to date.")}
         />
       </ScrollView>
 

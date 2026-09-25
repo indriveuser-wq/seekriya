@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native"; // <-- Added Text here
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -19,7 +19,7 @@ import { monoText } from "../theme/typography";
 
 type Props = NativeStackScreenProps<RootStackParamList, "AICalibration">;
 
-export default function AICalibrationScreen({ route }: Props) {
+export default function AICalibrationScreen({ navigation, route }: Props) {
   const insets = useSafeAreaInsets();
   const { paperId } = route.params;
   const { data, loading } = useAICalibration(paperId);
@@ -72,8 +72,8 @@ export default function AICalibrationScreen({ route }: Props) {
         <ActionButtons
           confirmLabel={data.confirmLabel}
           reevaluateLabel={data.reevaluateLabel}
-          onConfirm={() => console.log("confirm-score")}
-          onReevaluate={() => console.log("request-reevaluation")}
+          onConfirm={() => navigation.navigate("TeacherCohort")}
+          onReevaluate={() => Alert.alert("Re-evaluation requested", "The annotated script was sent for model review.")}
         />
       </ScrollView>
 

@@ -1,5 +1,7 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AppBottomNav from "../components/AppBottomNav";
@@ -14,10 +16,12 @@ import VelocityCard from "../components/VelocityCard";
 import { useProgress } from "../hooks/useProgress";
 import { mockLoginMeta, mockUserProfile } from "../mocks/auth.mock";
 import { colors } from "../theme/colors";
+import { RootStackParamList } from "../navigation/AppNavigator";
 
 export default function ProgressScreen() {
   const insets = useSafeAreaInsets();
   const { data, loading } = useProgress();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   if (loading || !data) {
     return (
@@ -33,12 +37,12 @@ export default function ProgressScreen() {
 
       <AppHeader
         title={mockLoginMeta.appName}
-        subtitle="Home"
+        subtitle="Progress"
         badge={mockLoginMeta.gradeBadge}
         streakDays={mockUserProfile.streakDays}
         avatarUrl={mockUserProfile.avatarUrl}
-        onNotificationPress={() => console.log("notifications")}
-        onAvatarPress={() => console.log("profile")}
+        onNotificationPress={() => Alert.alert("Notifications", "You are all caught up.")}
+        onAvatarPress={() => navigation.navigate("Settings")}
       />
 
       <ScrollView
@@ -52,7 +56,7 @@ export default function ProgressScreen() {
 
         <DiagnosticsSection
           diagnostics={data.diagnostics}
-          onRecovery={() => console.log("ai-recovery-sortie")}
+          onRecovery={() => navigation.navigate("Practice")}
         />
 
         <CommandDeck
@@ -61,8 +65,8 @@ export default function ProgressScreen() {
           subjects={data.subjects}
           minis={data.minis}
           expandLabel={data.expandLabel}
-          onLink={() => console.log("view-syllabus-spec")}
-          onExpand={() => console.log("expand-subjects")}
+          onLink={() => navigation.navigate("Subjects")}
+          onExpand={() => navigation.navigate("Subjects")}
         />
 
         <VelocityCard velocity={data.velocity} />
@@ -72,12 +76,12 @@ export default function ProgressScreen() {
         <ProgressActions
           generateLabel={data.generateLabel}
           exportLabel={data.exportLabel}
-          onGenerate={() => console.log("generate-study-plan")}
-          onExport={() => console.log("export-dossier")}
+          onGenerate={() => Alert.alert("Study plan", "Your personalized 7-day plan is being prepared.")}
+          onExport={() => Alert.alert("Performance dossier", "Your dossier is ready to export.")}
         />
       </ScrollView>
 
-      <AppBottomNav activeKey="home" bottomInset={insets.bottom} />
+      <AppBottomNav activeKey="progress" bottomInset={insets.bottom} />
     </View>
   );
 }

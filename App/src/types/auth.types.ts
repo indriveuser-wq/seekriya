@@ -1,7 +1,7 @@
 export type UserRole = "student" | "teacher";
 
 export interface LoginPayload {
-  identifier: string;
+  email: string;
   password: string;
   role: UserRole;
   keepActive: boolean;

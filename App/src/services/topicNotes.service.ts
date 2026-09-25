@@ -1,5 +1,6 @@
 import { USE_MOCK_DATA } from "../constants/config";
 import { supabase } from "../lib/supabase";
+import { isMissingRelationError } from "../lib/supabaseErrors";
 import { mockTopicNotes } from "../mocks/topicNotes.mock";
 import { TopicNotesData } from "../types/topicNotes.types";
 
@@ -22,6 +23,7 @@ export async function fetchTopicNotes(topicId: string): Promise<TopicNotesData> 
     .limit(1)
     .maybeSingle();
 
+  if (isMissingRelationError(error)) return mockTopicNotes;
   if (error) throw new Error(error.message);
   if (!data) return mockTopicNotes;
 

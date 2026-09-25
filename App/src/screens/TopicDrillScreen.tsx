@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -78,8 +78,8 @@ export default function TopicDrillScreen({ navigation, route }: Props) {
           title={data.matricesTitle}
           settingsLabel={data.matricesSettingsLabel}
           matrices={data.matrices}
-          onPress={(id) => console.log("matrix:", id)}
-          onSettings={() => console.log("adaptive-settings")}
+          onPress={(id) => Alert.alert("Practice matrix", `${id} is ready to inspect.`)}
+          onSettings={() => Alert.alert("Adaptive settings", "Adaptive practice settings are ready to configure.")}
         />
 
         <FlightNotes
@@ -93,7 +93,7 @@ export default function TopicDrillScreen({ navigation, route }: Props) {
 
       <SprintBar
         sprint={data.sprint}
-        onPress={() => console.log("launch-drill")}
+        onPress={() => navigation.navigate("Practice")}
         bottomInset={insets.bottom}
       />
     </View>

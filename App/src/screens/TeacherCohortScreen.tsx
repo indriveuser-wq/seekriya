@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native"; // <-- Add this
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"; // <-- Add this
@@ -40,7 +40,7 @@ export default function TeacherCohortScreen() {
       <ConsoleHeader
         header={data.header}
         avatarUrl={mockTeacher.profile.avatarUrl}
-        onNotification={() => console.log("notifications")}
+        onNotification={() => Alert.alert("Notifications", "You are all caught up.")}
       />
 
       <ScrollView
@@ -58,7 +58,7 @@ export default function TeacherCohortScreen() {
           bottleneck={data.bottleneck}
           hotspots={data.hotspots}
           onPushSortie={() => setSnackbarVisible(true)}
-          onHotspotPress={(id) => console.log("hotspot:", id)}
+          onHotspotPress={(id) => Alert.alert("Hotspot selected", `${id} is ready for intervention.`)}
         />
 
         <CandidateTelemetry
@@ -67,13 +67,13 @@ export default function TeacherCohortScreen() {
           chip={data.telemetryChip}
           filters={data.filters}
           students={data.students}
-          onNudge={(id) => console.log("nudge:", id)}
+          onNudge={(id) => Alert.alert("Parent nudge", `A reminder for ${id} is ready to send.`)}
           onDossier={(id) => navigation.navigate("AICalibration", { paperId: id })} // <-- Updated this
         />
 
         <ActivityRhythmCard rhythm={data.rhythm} />
 
-        <PtmCard ptm={data.ptm} onDownload={() => console.log("download-ptm")} />
+        <PtmCard ptm={data.ptm} onDownload={() => Alert.alert("PTM report", "The cohort PTM report is ready to download.")} />
       </ScrollView>
 
       {snackbarVisible ? (
